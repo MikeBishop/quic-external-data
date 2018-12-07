@@ -28,9 +28,9 @@ informative:
 --- abstract
 
 In certain applications, it is useful to be able to process data as it arrives
-out of order in an HTTP message.  This document describes an HTTP/3 extension
-that facilitates partial generation and out-of-order consumption of HTTP/3
-message bodies.
+out of order in an HTTP message or to generate message body incrementally in
+small chunks.  This document describes an HTTP/3 extension that facilitates
+partial generation and out-of-order consumption of HTTP/3 message bodies.
 
 --- middle
 
