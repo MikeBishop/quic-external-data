@@ -4,9 +4,9 @@
 
 QUIC                                                           M. Bishop
 Internet-Draft                                                    Akamai
-Updates: 8336 (if approved)                             December 6, 2018
+Updates: 8336 (if approved)                             December 7, 2018
 Intended status: Standards Track
-Expires: June 9, 2019
+Expires: June 10, 2019
 
 
                      EXTERNAL_DATA Frame for HTTP/3
@@ -15,9 +15,10 @@ Expires: June 9, 2019
 Abstract
 
    In certain applications, it is useful to be able to process data as
-   it arrives out of order in an HTTP message.  This document describes
-   an HTTP/3 extension that facilitates partial generation and out-of-
-   order consumption of HTTP/3 message bodies.
+   it arrives out of order in an HTTP message or to generate message
+   body incrementally in small chunks.  This document describes an
+   HTTP/3 extension that facilitates partial generation and out-of-order
+   consumption of HTTP/3 message bodies.
 
 Status of This Memo
 
@@ -34,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 9, 2019.
+   This Internet-Draft will expire on June 10, 2019.
 
 Copyright Notice
 
@@ -48,15 +49,17 @@ Copyright Notice
    carefully, as they describe your rights and restrictions with respect
    to this document.  Code Components extracted from this document must
    include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
 
 
 
-Bishop                    Expires June 9, 2019                  [Page 1]
+
+Bishop                    Expires June 10, 2019                 [Page 1]
 
 Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
 
+
+   the Trust Legal Provisions and are provided without warranty as
+   described in the Simplified BSD License.
 
 Table of Contents
 
@@ -66,7 +69,7 @@ Table of Contents
      3.1.  The EXTERNAL_DATA Frame . . . . . . . . . . . . . . . . .   3
      3.2.  The External Data Stream Type . . . . . . . . . . . . . .   4
    4.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   4
+   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
      5.1.  Frame Type  . . . . . . . . . . . . . . . . . . . . . . .   5
      5.2.  Stream Type . . . . . . . . . . . . . . . . . . . . . . .   5
    6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
@@ -104,16 +107,15 @@ Table of Contents
    longer relevant to the recipient, but consumes bandwidth which could
    instead be used to send newer content.
 
-   This document permits the payload of a DATA frame to be sent unframed
-   on a separate unidirectional stream.  Following the required type
 
 
-
-Bishop                    Expires June 9, 2019                  [Page 2]
+Bishop                    Expires June 10, 2019                 [Page 2]
 
 Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
 
 
+   This document permits the payload of a DATA frame to be sent unframed
+   on a separate unidirectional stream.  Following the required type
    byte, this stream can safely be made partially reliable if the QUIC
    implementations support such a state.  The content can be consumed
    out-of-order if the receiving QUIC implementation exposes this
@@ -155,6 +157,19 @@ Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
    stream, the recipient MUST respond with a connection error of type
    HTTP_WRONG_STREAM.
 
+
+
+
+
+
+
+
+
+Bishop                    Expires June 10, 2019                 [Page 3]
+
+Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
+
+
     0                   1                   2                   3
     0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
@@ -162,13 +177,6 @@ Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
    +-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+-+
 
                    Figure 1: EXTERNAL_DATA frame payload
-
-
-
-Bishop                    Expires June 9, 2019                  [Page 3]
-
-Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
-
 
    The payload of an EXTERNAL_DATA frame is a variable-length integer
    containing a QUIC stream ID.  This ID MUST identify a bidirectional
@@ -210,21 +218,18 @@ Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
    unidirectional stream which does not arrive in a timely manner, the
    same mitigations should be employed as if a DATA frame's header
    arrived but the payload were delayed.  A reasonable timeout should be
+
+
+
+Bishop                    Expires June 10, 2019                 [Page 4]
+
+Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
+
+
    used to ensure that the request and response are transferred in a
    timely manner.
 
 5.  IANA Considerations
-
-
-
-
-
-
-
-Bishop                    Expires June 9, 2019                  [Page 4]
-
-Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
-
 
 5.1.  Frame Type
 
@@ -272,9 +277,4 @@ Author's Address
 
 
 
-
-
-
-
-
-Bishop                    Expires June 9, 2019                  [Page 5]
+Bishop                    Expires June 10, 2019                 [Page 5]
