@@ -143,7 +143,11 @@ corresponding EXTERNAL_DATA frame, regardless of the order, this places
 additional stress on the receiver. The receiver SHOULD NOT consume payload from
 an External Data stream before receiving the EXTERNAL_DATA frame which indicates
 to which HTTP exchange the body belongs.  This permits flow control to limit the
-amount of data which cannot be reliably interpreted.
+amount of data which cannot be reliably interpreted.  However, in extreme cases,
+failure to consume this data could cause connection flow control to prevent the
+EXTERNAL_DATA frame from being sent.  Senders MUST use caution to ensure that
+flow control credit will be allocated to the EXTERNAL_DATA frame before being
+allocated to any bytes on the External Data stream.
 
 If an EXTERNAL_DATA frame is received which indicates a unidirectional stream
 which does not arrive in a timely manner, the same mitigations should be
