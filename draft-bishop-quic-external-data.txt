@@ -4,9 +4,9 @@
 
 QUIC                                                           M. Bishop
 Internet-Draft                                                    Akamai
-Updates: 8336 (if approved)                             December 7, 2018
+Updates: 8336 (if approved)                             December 8, 2018
 Intended status: Standards Track
-Expires: June 10, 2019
+Expires: June 11, 2019
 
 
                      EXTERNAL_DATA Frame for HTTP/3
@@ -35,7 +35,7 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 10, 2019.
+   This Internet-Draft will expire on June 11, 2019.
 
 Copyright Notice
 
@@ -53,7 +53,7 @@ Copyright Notice
 
 
 
-Bishop                    Expires June 10, 2019                 [Page 1]
+Bishop                    Expires June 11, 2019                 [Page 1]
 
 Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
 
@@ -75,7 +75,7 @@ Table of Contents
    6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
      6.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
      6.2.  Informative References  . . . . . . . . . . . . . . . . .   5
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   5
+   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   6
 
 1.  Introduction
 
@@ -109,7 +109,7 @@ Table of Contents
 
 
 
-Bishop                    Expires June 10, 2019                 [Page 2]
+Bishop                    Expires June 11, 2019                 [Page 2]
 
 Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
 
@@ -165,7 +165,7 @@ Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
 
 
 
-Bishop                    Expires June 10, 2019                 [Page 3]
+Bishop                    Expires June 11, 2019                 [Page 3]
 
 Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
 
@@ -212,20 +212,24 @@ Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
    NOT consume payload from an External Data stream before receiving the
    EXTERNAL_DATA frame which indicates to which HTTP exchange the body
    belongs.  This permits flow control to limit the amount of data which
-   cannot be reliably interpreted.
+   cannot be reliably interpreted.  However, in extreme cases, failure
+   to consume this data could cause connection flow control to prevent
+   the EXTERNAL_DATA frame from being sent.  Senders MUST use caution to
+   ensure that flow control credit will be allocated to the
+   EXTERNAL_DATA frame before being allocated to any bytes on the
+   External Data stream.
+
+
+
+Bishop                    Expires June 11, 2019                 [Page 4]
+
+Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
+
 
    If an EXTERNAL_DATA frame is received which indicates a
    unidirectional stream which does not arrive in a timely manner, the
    same mitigations should be employed as if a DATA frame's header
    arrived but the payload were delayed.  A reasonable timeout should be
-
-
-
-Bishop                    Expires June 10, 2019                 [Page 4]
-
-Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
-
-
    used to ensure that the request and response are transferred in a
    timely manner.
 
@@ -267,6 +271,17 @@ Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
               and Secure Transport", draft-ietf-quic-transport-16 (work
               in progress), October 2018.
 
+
+
+
+
+
+
+Bishop                    Expires June 11, 2019                 [Page 5]
+
+Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
+
+
 Author's Address
 
    Mike Bishop
@@ -277,4 +292,45 @@ Author's Address
 
 
 
-Bishop                    Expires June 10, 2019                 [Page 5]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+Bishop                    Expires June 11, 2019                 [Page 6]
