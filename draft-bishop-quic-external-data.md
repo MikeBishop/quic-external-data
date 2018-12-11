@@ -4,7 +4,6 @@ abbrev: HTTP/3 EXTERNAL_DATA
 docname: draft-bishop-quic-external-data-latest
 date: {DATE}
 category: std
-updates: 8336
 
 ipr: trust200902
 area: Transport
