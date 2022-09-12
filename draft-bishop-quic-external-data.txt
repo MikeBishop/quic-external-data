@@ -4,8 +4,8 @@
 
 QUIC                                                           M. Bishop
 Internet-Draft                                                    Akamai
-Intended status: Standards Track                       December 11, 2018
-Expires: June 14, 2019
+Intended status: Standards Track                       12 September 2022
+Expires: 16 March 2023
 
 
                      EXTERNAL_DATA Frame for HTTP/3
@@ -34,45 +34,37 @@ Status of This Memo
    time.  It is inappropriate to use Internet-Drafts as reference
    material or to cite them other than as "work in progress."
 
-   This Internet-Draft will expire on June 14, 2019.
+   This Internet-Draft will expire on 16 March 2023.
 
 Copyright Notice
 
-   Copyright (c) 2018 IETF Trust and the persons identified as the
+   Copyright (c) 2022 IETF Trust and the persons identified as the
    document authors.  All rights reserved.
 
    This document is subject to BCP 78 and the IETF Trust's Legal
-   Provisions Relating to IETF Documents
-   (https://trustee.ietf.org/license-info) in effect on the date of
-   publication of this document.  Please review these documents
-   carefully, as they describe your rights and restrictions with respect
-   to this document.  Code Components extracted from this document must
-   include Simplified BSD License text as described in Section 4.e of
-   the Trust Legal Provisions and are provided without warranty as
-   described in the Simplified BSD License.
-
-
-
-Bishop                    Expires June 14, 2019                 [Page 1]
-
-Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
-
+   Provisions Relating to IETF Documents (https://trustee.ietf.org/
+   license-info) in effect on the date of publication of this document.
+   Please review these documents carefully, as they describe your rights
+   and restrictions with respect to this document.  Code Components
+   extracted from this document must include Revised BSD License text as
+   described in Section 4.e of the Trust Legal Provisions and are
+   provided without warranty as described in the Revised BSD License.
 
 Table of Contents
 
-   1.  Introduction  . . . . . . . . . . . . . . . . . . . . . . . .   2
-   2.  Negotiating Support . . . . . . . . . . . . . . . . . . . . .   3
-   3.  Using the EXTERNAL_DATA frame . . . . . . . . . . . . . . . .   3
-     3.1.  The EXTERNAL_DATA Frame . . . . . . . . . . . . . . . . .   3
-     3.2.  The External Data Stream Type . . . . . . . . . . . . . .   4
-   4.  Security Considerations . . . . . . . . . . . . . . . . . . .   4
-   5.  IANA Considerations . . . . . . . . . . . . . . . . . . . . .   5
-     5.1.  Frame Type  . . . . . . . . . . . . . . . . . . . . . . .   5
-     5.2.  Stream Type . . . . . . . . . . . . . . . . . . . . . . .   5
-   6.  References  . . . . . . . . . . . . . . . . . . . . . . . . .   5
-     6.1.  Normative References  . . . . . . . . . . . . . . . . . .   5
-     6.2.  Informative References  . . . . . . . . . . . . . . . . .   5
-   Author's Address  . . . . . . . . . . . . . . . . . . . . . . . .   5
+   1.  Introduction
+   2.  Negotiating Support
+   3.  Using the EXTERNAL_DATA frame
+     3.1.  The EXTERNAL_DATA Frame
+     3.2.  The External Data Stream Type
+   4.  Security Considerations
+   5.  IANA Considerations
+     5.1.  Frame Type
+     5.2.  Stream Type
+   6.  References
+     6.1.  Normative References
+     6.2.  Informative References
+   Author's Address
 
 1.  Introduction
 
@@ -106,14 +98,6 @@ Table of Contents
 
    This document permits the payload of a DATA frame to be sent unframed
    on a separate unidirectional stream.  Following the required type
-
-
-
-Bishop                    Expires June 14, 2019                 [Page 2]
-
-Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
-
-
    byte, this stream can safely be made partially reliable if the QUIC
    implementations support such a state.  The content can be consumed
    out-of-order if the receiving QUIC implementation exposes this
@@ -163,22 +147,15 @@ Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
 
                    Figure 1: EXTERNAL_DATA frame payload
 
-
-
-Bishop                    Expires June 14, 2019                 [Page 3]
-
-Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
-
-
    The payload of an EXTERNAL_DATA frame is a variable-length integer
-   containing a QUIC stream ID.  This ID MUST identify a bidirectional
+   containing a QUIC stream ID.  This ID MUST identify a unidirectional
    stream initiated by the sender of the EXTERNAL_DATA frame.  Receipt
    of an EXTERNAL_DATA frame with a Stream ID of any other type MUST be
    treated as a stream error of type HTTP_MALFORMED_FRAME.
 
    Upon receipt, if the type of the indicated stream is not External
-   Data ("0x44"), this MUST be treated as a stream error of type
-   "HTTP_UNKNOWN_STREAM_TYPE" on the request stream.  The indicated
+   Data (0x44), this MUST be treated as a stream error of type
+   HTTP_UNKNOWN_STREAM_TYPE on the request stream.  The indicated
    unidirectional stream MAY still be consumed according to its declared
    type, if understood.
 
@@ -191,10 +168,10 @@ Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
 
 3.2.  The External Data Stream Type
 
-   An external data stream is indicated by a stream type of "0x44"
-   (ASCII 'D').  There is no additional framing on this unidirectional
-   stream; the entire stream payload is interpreted as a fragment of the
-   HTTP message body.
+   An external data stream is indicated by a stream type of 0x44 (ASCII
+   'D').  There is no additional framing on this unidirectional stream;
+   the entire stream payload is interpreted as a fragment of the HTTP
+   message body.
 
 4.  Security Considerations
 
@@ -217,14 +194,6 @@ Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
    arrived but the payload were delayed.  A reasonable timeout should be
    used to ensure that the request and response are transferred in a
    timely manner.
-
-
-
-
-Bishop                    Expires June 14, 2019                 [Page 4]
-
-Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
-
 
 5.  IANA Considerations
 
@@ -254,27 +223,21 @@ Internet-Draft            HTTP/3 EXTERNAL_DATA             December 2018
 
 6.1.  Normative References
 
-   [HTTP3]    Bishop, M., "Hypertext Transfer Protocol (HTTP) over
-              QUIC", draft-ietf-quic-http-16 (work in progress), October
-              2018.
+   [HTTP3]    Bishop, M., "HTTP/3", Work in Progress, Internet-Draft,
+              draft-ietf-quic-http-34, 2 February 2021,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
+              http-34>.
 
 6.2.  Informative References
 
    [QUIC]     Iyengar, J. and M. Thomson, "QUIC: A UDP-Based Multiplexed
-              and Secure Transport", draft-ietf-quic-transport-16 (work
-              in progress), October 2018.
+              and Secure Transport", Work in Progress, Internet-Draft,
+              draft-ietf-quic-transport-34, 14 January 2021,
+              <https://datatracker.ietf.org/doc/html/draft-ietf-quic-
+              transport-34>.
 
 Author's Address
 
    Mike Bishop
    Akamai
-
    Email: mbishop@evequefou.be
-
-
-
-
-
-
-
-Bishop                    Expires June 14, 2019                 [Page 5]
