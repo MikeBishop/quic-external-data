@@ -113,7 +113,7 @@ respond with a connection error of type HTTP_WRONG_STREAM.
 {: #fig-frame title="EXTERNAL_DATA frame payload"}
 
 The payload of an EXTERNAL_DATA frame is a variable-length integer containing a
-QUIC stream ID.  This ID MUST identify a bidirectional stream initiated by the
+QUIC stream ID.  This ID MUST identify a unidirectional stream initiated by the
 sender of the EXTERNAL_DATA frame.  Receipt of an EXTERNAL_DATA frame with a
 Stream ID of any other type MUST be treated as a stream error of type
 HTTP_MALFORMED_FRAME.
